@@ -7,9 +7,13 @@ import { CanvasElemetTypes } from 'projects/ngx-paint/src/lib/core/models/elemen
 })
 export class NgxPaintService {
 
+    private readonly activeElementStrokeWidth = 3;
+    private readonly activeElementStrokeColor = '#03A9F4';
+
     private _canvas: HTMLCanvasElement;
-    private _defaultCanvasSize: ICanvasSize;
+    private _dragModeOn: boolean = false;
     private _ctx: CanvasRenderingContext2D;
+    private _defaultCanvasSize: ICanvasSize;
 
     public constructor() {
         this._defaultCanvasSize = {
@@ -24,6 +28,14 @@ export class NgxPaintService {
         this._ctx = this._canvas.getContext('2d');
     }
 
+    public set enableDragMode(value: boolean) {
+        this._dragModeOn = value;
+    }
+
+    public get isDragModeEnabled(): boolean {
+        return this._dragModeOn;
+    }
+
     public updateCanvas(elements: CanvasElement[]): void {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
         elements.forEach(element => {
@@ -35,15 +47,22 @@ export class NgxPaintService {
         //  Find the active element if any
         const activeElement = elements.find(el => el.active);
         if (activeElement && activeElement.type === CanvasElemetTypes.image && activeElement.active) {
-            this._ctx.lineWidth = 3;
-            this._ctx.strokeStyle = 'red';
+            this._ctx.lineWidth = this.activeElementStrokeWidth;
+            this._ctx.strokeStyle = this.activeElementStrokeColor;
 
             this._ctx.strokeRect(activeElement.posX, activeElement.posY, activeElement.sizeW, activeElement.sizeH);
         }
     }
 
+    public dragElement(mouseEvent: MouseEvent, element: CanvasElement): CanvasElement {
+        element.posY = mouseEvent.y - this._canvas.offsetTop;
+        element.posX = mouseEvent.x - this._canvas.offsetLeft;
+
+        return element;
+    }
+
     private addImageToCanvas(element: CanvasElement): void {
-        this._ctx.drawImage(element.image, 0, 0, element.sizeW, element.sizeH);
+        this._ctx.drawImage(element.image, element.posX, element.posY, element.sizeW, element.sizeH);
     }
 
     private sizeCanvas(c: HTMLCanvasElement): HTMLCanvasElement {

@@ -19,6 +19,7 @@ export class NgxPaintComponent implements OnInit {
 
     @ViewChild('canvas') private _canvas: ElementRef<HTMLCanvasElement>;
 
+    public isDragging: boolean = false;
     public canvasElements: CanvasElement[] = [];
 
     public constructor(
@@ -31,6 +32,32 @@ export class NgxPaintComponent implements OnInit {
 
     public ngAfterViewInit(): void {
         this.paintSvc.canvas = this._canvas.nativeElement;
+    }
+
+    public onCanvasMouseDown(evt: MouseEvent): void {
+        let activeElement = this.canvasElements.find(el => el.active);
+        if (!!activeElement && !this.paintSvc.isDragModeEnabled) {
+            this.isDragging = true;
+            this.paintSvc.enableDragMode = true;
+        }
+    }
+
+    public onCanvasMouseUp(evt: MouseEvent): void {
+        let activeElement = this.canvasElements.find(el => el.active);
+        if (!!activeElement && !!this.paintSvc.isDragModeEnabled) {
+            this.isDragging = false;
+            this.paintSvc.enableDragMode = false;
+        }
+    }
+
+    public onCanvasMouseMove(evt: MouseEvent): void {
+        let activeElement = this.canvasElements.find(el => el.active);
+        if (!activeElement || !this.paintSvc.isDragModeEnabled) {
+            return;
+        }
+
+        activeElement = this.paintSvc.dragElement(evt, activeElement);
+        this.paintSvc.updateCanvas(this.canvasElements);
     }
 
     public onDeleteLayerClick(layer: CanvasElement): void {

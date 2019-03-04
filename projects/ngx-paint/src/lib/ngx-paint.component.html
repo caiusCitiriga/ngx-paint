@@ -1,4 +1,5 @@
-<div id="np-wrp" [style.height]="wrapperHeight" [style.width]="wrapperWidth">
+<div id="np-wrp" (mousemove)="onCanvasMouseMove($event)" [class.dragging]="isDragging" [style.height]="wrapperHeight"
+    [style.width]="wrapperWidth">
     <div id="np-controls">
         <div (click)="uploadImage()" class="mdi mdi-upload icon-btn"></div>
     </div>
@@ -7,5 +8,5 @@
             (onZoomLayerIn)="onZoomInLayer($event)" (onZoomLayerOut)="onZoomOutLayer($event)" [element]="element"
             *ngFor="let element of canvasElements"></ngx-layer-preview>
     </div>
-    <canvas #canvas></canvas>
+    <canvas #canvas (mousedown)="onCanvasMouseDown($event)" (mouseup)="onCanvasMouseUp($event)"></canvas>
 </div>
