@@ -1,0 +1,8 @@
+<div class="layer-preview" (click)="onLayerClick()" [class.active]="element.active">
+    <span class="mdi mdi-close" (click)="onDeleteLayerClick($event)"></span>
+    <span class="mdi mdi-magnify-minus-outline" (click)="onZoomOutLayer($event)"></span>
+    <span class="mdi mdi-magnify-plus-outline" (click)="onZoomInLayer($event)"></span>
+    <input id="zoom-factor" type="number" [(ngModel)]="zoomFactor">
+    <img height="150" [src]="element.image.src | sanitization" *ngIf="element.type === 'image'">
+    <h5 *ngIf="element.type !== 'image'">{{element.type}}</h5>
+</div>

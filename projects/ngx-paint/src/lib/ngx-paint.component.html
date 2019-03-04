@@ -1,0 +1,11 @@
+<div id="np-wrp" [style.height]="wrapperHeight" [style.width]="wrapperWidth">
+    <div id="np-controls">
+        <div (click)="uploadImage()" class="mdi mdi-upload icon-btn"></div>
+    </div>
+    <div id="np-canvas-elements">
+        <ngx-layer-preview (onDeleteLayer)="onDeleteLayerClick($event)" (onLayerSelected)="onLayerClick($event)"
+            (onZoomLayerIn)="onZoomInLayer($event)" (onZoomLayerOut)="onZoomOutLayer($event)" [element]="element"
+            *ngFor="let element of canvasElements"></ngx-layer-preview>
+    </div>
+    <canvas #canvas></canvas>
+</div>

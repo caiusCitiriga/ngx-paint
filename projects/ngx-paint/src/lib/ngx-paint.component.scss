@@ -1,0 +1,49 @@
+@import 'styles/variables';
+
+#np-wrp{
+    width: auto;
+    height: 780px;
+    display: flex;
+}
+
+#np-controls{
+    width: 80px;
+    height: 100%;
+}
+
+#np-canvas-elements{
+    height: 100%;
+    min-width: 250px;
+    padding-top: 12px;
+    overflow-y: scroll;
+    padding-bottom: 12px;
+}
+
+.icon-btn{
+    font-size: 20px;
+    border: 1px solid;
+    margin-left: 12px;
+    margin-right: 12px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 12px;
+    color: $lm-text-color;
+    background-color: transparent;
+    transition: all 120ms ease-in-out;
+
+    &:first-child{
+        margin-top: 12px;
+    }
+
+    &:hover{
+        cursor: pointer;
+        color: $lm-bg-color;
+        background-color: #333;
+    }   
+}
+
+canvas{
+    margin: 12px;
+    border-radius: 4px;
+    border: 1px solid #bababa;
+}

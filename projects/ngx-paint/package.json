@@ -1,0 +1,11 @@
+{
+    "name": "ngx-paint",
+    "version": "0.0.1",
+    "peerDependencies": {
+        "@angular/common": "^7.2.0",
+        "@angular/core": "^7.2.0"
+    },
+    "dependencies": {
+        "@mdi/font": "^3.5.95"
+    }
+}
